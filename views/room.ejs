@@ -27,8 +27,51 @@
         object-fit: cover;
       }
     </style>
+
+    <style>
+      html,
+      body,
+      .grid-container {
+        height: 100%;
+        margin: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 1px 1px;
+        grid-template-areas: "videoDiv videoDiv videoDiv videosDiv" "videoDiv videoDiv videoDiv videosDiv" "videoDiv videoDiv videoDiv videosDiv";
+      }
+
+      .videosDiv {
+        grid-area: videosDiv;
+      }
+
+      .videoDiv {
+        grid-area: videoDiv;
+      }
+
+      /* For presentation only, no need to copy the code below */
+      .grid-container * {
+        border: 1px solid red;
+        position: relative;
+      }
+
+      .grid-container *:after {
+        content: attr(class);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="video-grid"></div>
+    <div class="grid-container">
+      <div class="videosDiv">
+        <div id="video-grid"></div>
+      </div>
+      <div class="videoDiv"></div>
+    </div>
   </body>
 </html>
