@@ -54,6 +54,48 @@
         grid-area: videoDiv;
       }
     </style>
+
+    <script>
+      var player,
+        timer,
+        timeSpent = [];
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          events: { onStateChange: onPlayerStateChange },
+        });
+      }
+
+      function onPlayerStateChange(event) {
+        if (event.data === 1) {
+          // Started playing
+          if (!timeSpent.length) {
+            for (var i = 0, l = parseInt(player.getDuration()); i < l; i++)
+              timeSpent.push(false);
+          }
+          timer = setInterval(record, 100);
+        } else {
+          clearInterval(timer);
+        }
+      }
+
+      function record() {
+        timeSpent[parseInt(player.getCurrentTime())] = true;
+        showPercentage();
+      }
+
+      function showPercentage() {
+        var percent = 0;
+        for (var i = 0, l = timeSpent.length; i < l; i++) {
+          if (timeSpent[i]) percent++;
+        }
+        console.log(percent);
+      }
+
+      function constructURL() {
+        return "https://youtube.com/embed" + arguments[0] + "?enablejsapi=1#";
+      }
+    </script>
   </head>
   <body>
     <div class="grid-container">
